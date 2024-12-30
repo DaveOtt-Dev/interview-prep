@@ -1,44 +1,32 @@
 import heapq
+import math
 
-class Node:
-    def __init__(self, v, distance):
-        self.v = v
-        self.distance = distance
+def dijkstra(graph: dict, start: str):
+    """
+    Dijkstra's algorithm to find the shortest path from a start node to all other nodes in a graph.
 
-    def __lt__(self, other):
-        return self.distance < other.distance
-
-# V == # of vertices
-# adj == adjacent vertices
-# S == 
-def dijkstra(V, adj, S):
-    print(V)
-    print(adj)
-    print(S)
-
-    
+    :param graph: A dictionary representing the graph, where keys are nodes and values are dictionaries of neighbors and edge weights.
+    :param start: The starting node.
+    :return: A dictionary of shortest distances from the start node to all other nodes.
+    """
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+    visited = set()
+    pq = [(0, start)]
 
 
-def main():
-    adj = [[] for _ in range(6)]
+# Example usage
+graph = {
+    'A': {'B': 4, 'C': 2},
+    'B': {'A': 4, 'D': 5},
+    'C': {'A': 2, 'B': 1, 'D': 8, 'E': 10},
+    'D': {'B': 5, 'C': 8, 'E': 2},
+    'E': {'C': 10, 'D': 2}
+}
 
-    V = 6
-    E = 5
-    u = [0, 0, 1, 2, 4]
-    v = [3, 5, 4, 5, 5]
-    w = [9, 4, 4, 10, 3]
+start_node = 'A'
+shortest_distances = dijkstra(graph, start_node)
 
-    for i in range(E):
-        edge = [v[i], w[i]]
-        adj[u[i]].append(edge)
-
-        edge2 = [u[i], w[i]]
-        adj[v[i]].append(edge2)
-
-    S = 1
-
-    result = dijkstra(V, adj, S)
-    print(result)
-
-if __name__ == "__main__":
-    main()
+print("Shortest distances from node", start_node, ":")
+for node, distance in shortest_distances.items():
+    print(node, ":", distance)
